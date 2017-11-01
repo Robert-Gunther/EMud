@@ -21,6 +21,9 @@ namespace EMud.Networking
 		private Socket socket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private List<Client> connectedClients = new List<Client>();
 
+		public delegate bool HandleConnectionDelegate(Client client);
+		public event HandleConnectionDelegate HandleConnection;
+
 		public Server (ushort port)
 		{
 			this.port = port;
@@ -42,6 +45,10 @@ namespace EMud.Networking
 
 		public void Stop()
 		{
+			foreach (var client in connectedClients) {
+				client.Close ();
+			}
+
 			socket.Close ();
 		}
 
@@ -52,14 +59,17 @@ namespace EMud.Networking
 		private void ConnectionAccepted(IAsyncResult result) 
 		{
 			var acceptedSocket = socket.EndAccept (result);
-
-			// TODO: Detect bans and other possible issues here.
-			// TODO: Connection throttling to fight against possible (D)DoS attacks.
-			// TODO: Other security features.
-			connectedClients.Add (new Client (acceptedSocket));
-
-			Console.WriteLine ("Socket Accepted");
 			BeginListening ();
+
+
+			if (HandleConnection != null) {
+				Client client = new Client (acceptedSocket);
+				if (HandleConnection (client)) {
+					connectedClients.Add (client);
+				} else {
+					client.Close ();
+				}
+			}
 		}
 	}
 }

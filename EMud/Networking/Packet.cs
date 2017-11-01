@@ -20,7 +20,7 @@ namespace EMud
 			var buffer = new List<byte> ();
 
 			WriteString (buffer, Command);
-			buffer.Add (BitConverter.GetBytes (Arguments.Count));
+			buffer.AddRange (BitConverter.GetBytes (Arguments.Count));
 
 			foreach (var argument in Arguments) {
 				WriteString (buffer, argument);
@@ -33,7 +33,7 @@ namespace EMud
 		{
 			var data = Encoding.UTF8.GetBytes (s);
 
-			buffer.Add (BitConverter.GetBytes (data.Length));
+			buffer.AddRange (BitConverter.GetBytes (data.Length));
 			buffer.AddRange (data);
 		}
 	}
