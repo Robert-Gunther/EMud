@@ -21,8 +21,11 @@ namespace EMud.Networking
 		private Socket socket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		private List<Client> connectedClients = new List<Client>();
 
-		public delegate bool HandleConnectionDelegate(Client client);
-		public event HandleConnectionDelegate HandleConnection;
+		public delegate bool HandleConnectionCallback(Client client);
+		public event HandleConnectionCallback HandleConnection;
+
+		public delegate void EstablishedCallback();
+		public event EstablishedCallback Established;
 
 		public Server (ushort port)
 		{
@@ -37,6 +40,11 @@ namespace EMud.Networking
 			try {
 				socket.Bind(endPoint);
 				socket.Listen(50);
+
+				if(Established != null) {
+					Established();
+				}
+
 				BeginListening();
 			} catch(Exception e) {
 				Console.WriteLine ("Error: {0}", e.ToString ());

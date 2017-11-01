@@ -36,12 +36,19 @@ namespace EMudDemo
 		{
 			Server server = new Server (12345);
 
+			server.Established += Server_Established;
 			server.HandleConnection += ProcessLogin;
+
 			server.Start ();
 
-			Console.WriteLine ("Press enter to shutdown . . .");
+			Console.WriteLine ("Press enter to shutdown the server . . .");
 			Console.ReadLine ();
 			server.Stop ();
+		}
+
+		static void Server_Established ()
+		{
+			Console.WriteLine ("E-Mud Example Server is successfully running.");
 		}
 	}
 }
