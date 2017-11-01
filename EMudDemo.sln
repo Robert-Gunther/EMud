@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMudDemo", "EMudDemo\EMudDemo.csproj", "{92710719-B748-4AEA-AC17-35435CF78153}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMud", "EMud\EMud.csproj", "{6CA2ED29-D946-4A8A-B3C8-BDB66FD51BE8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CA2ED29-D946-4A8A-B3C8-BDB66FD51BE8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6CA2ED29-D946-4A8A-B3C8-BDB66FD51BE8}.Debug|x86.Build.0 = Debug|Any CPU
+		{6CA2ED29-D946-4A8A-B3C8-BDB66FD51BE8}.Release|x86.ActiveCfg = Release|Any CPU
+		{6CA2ED29-D946-4A8A-B3C8-BDB66FD51BE8}.Release|x86.Build.0 = Release|Any CPU
+		{92710719-B748-4AEA-AC17-35435CF78153}.Debug|x86.ActiveCfg = Debug|x86
+		{92710719-B748-4AEA-AC17-35435CF78153}.Debug|x86.Build.0 = Debug|x86
+		{92710719-B748-4AEA-AC17-35435CF78153}.Release|x86.ActiveCfg = Release|x86
+		{92710719-B748-4AEA-AC17-35435CF78153}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
