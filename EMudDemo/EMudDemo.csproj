@@ -42,5 +42,9 @@
       <Project>{6CA2ED29-D946-4A8A-B3C8-BDB66FD51BE8}</Project>
       <Name>EMud</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LuaClasses\LuaClasses.csproj">
+      <Project>{7C25F1AC-0564-4280-967A-65084BEB9CC3}</Project>
+      <Name>LuaClasses</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

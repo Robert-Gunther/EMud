@@ -37,22 +37,7 @@ namespace EMudDemo
 		public static void Main (string[] args)
 		{
 			server = new Server (12345);
-
-			server.ConnectionEstablished += Server_Established;
-			server.HandleConnection += ProcessLogin;
-			server.OnLogin += Server_OnLogin;
-
-			server.Start ();
-
-			Console.WriteLine ("Press Ctrl-C to gracefully shutdown the server . . .");
-			Console.CancelKeyPress += (sender, e) => {
-				Console.WriteLine("Server is shutting down.");
-				server.Stop ();
-			};
-
-			while (server.Running) {
-				// Process game logic.
-			}
+			server.Lua.RunFile ("emud.lua");
 		}
 
 		static void Server_OnLogin (Server server, Client client)

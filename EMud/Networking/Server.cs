@@ -4,6 +4,7 @@ using System.Text;
 using System.Net;
 using System.Threading;
 using System.Collections.Generic;
+using LuaClasses;
 
 namespace EMud.Networking
 {
@@ -37,9 +38,30 @@ namespace EMud.Networking
 
 		public bool Running { get; private set; }
 
+		public LuaHelper Lua = new LuaHelper();
+
 		public Server (ushort port)
 		{
 			this.port = port;
+			Lua.AddGlobal ("e_Server", this);
+			Lua.RegisterFunction ("e_AddConnectionCallback", this, GetType().GetMethod("AddConnectionCallback"));
+			Lua.RegisterFunction ("e_AddConnectionEstablishedCallback", this, GetType().GetMethod("AddConnectionEstablishedCallback"));
+			Lua.RegisterFunction ("e_AddLoginCallback", this, GetType().GetMethod("AddLoginCallback"));
+		}
+
+		public void AddConnectionCallback(HandleConnectionCallback callback)
+		{
+			HandleConnection += callback;
+		}
+
+		public void AddConnectionEstablishedCallback(ConnectionEstablishedCallback callback)
+		{
+			ConnectionEstablished += callback;
+		}
+
+		public void AddLoginCallback(LoginCallback callback)
+		{
+			OnLogin += callback;
 		}
 
 		public void Start()

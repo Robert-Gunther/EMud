@@ -40,4 +40,10 @@
   <ItemGroup>
     <Folder Include="Networking\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LuaClasses\LuaClasses.csproj">
+      <Project>{7C25F1AC-0564-4280-967A-65084BEB9CC3}</Project>
+      <Name>LuaClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

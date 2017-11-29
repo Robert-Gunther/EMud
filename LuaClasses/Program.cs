@@ -29,17 +29,16 @@ namespace LuaClasses
 			/* */
 
 			//These two lines are how you setup a lua state (Similar to a game state save)
-			Lua luaState = new Lua();
-			luaState.LoadCLRPackage ();
+
 
 			//This line selects which lua file you wish to use
-			luaState.DoFile ("test.lua");
+	//		luaState.DoFile ("test.lua");
 
 			//This is how you access a lua variable. An integer must be cast as a double before it is cast as an int
 			//You must use the ? after the variable name for numbers to allow them to be null
 			//The string in square brackets is the name of the variable in the lua file
 			// If you try to case a string as an int or etc an InvalidCastException will be thrown.
-			int? value = (int?)(luaState ["test"] as double?);
+	/*		int? value = (int?)(luaState ["test"] as double?);
 			//If the value does not exist it will return a null
 			if (value == null)
 				value = -1;
