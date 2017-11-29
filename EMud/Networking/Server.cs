@@ -19,13 +19,23 @@ namespace EMud.Networking
 	{
 		private ushort port;
 		private Socket socket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		private List<Client> connectedClients = new List<Client>();
+		public List<Client> connectedClients = new List<Client>();
+		public IReadOnlyList<Client> Clients {
+			get {
+				return connectedClients;
+			}
+		}
 
 		public delegate bool HandleConnectionCallback(Client client);
 		public event HandleConnectionCallback HandleConnection;
 
-		public delegate void EstablishedCallback();
-		public event EstablishedCallback Established;
+		public delegate void ConnectionEstablishedCallback();
+		public event ConnectionEstablishedCallback ConnectionEstablished;
+
+		public delegate void LoginCallback (Server server, Client client);
+		public event LoginCallback OnLogin;
+
+		public bool Running { get; private set; }
 
 		public Server (ushort port)
 		{
@@ -41,10 +51,11 @@ namespace EMud.Networking
 				socket.Bind(endPoint);
 				socket.Listen(50);
 
-				if(Established != null) {
-					Established();
+				if(ConnectionEstablished != null) {
+					ConnectionEstablished();
 				}
 
+				Running = true;
 				BeginListening();
 			} catch(Exception e) {
 				Console.WriteLine ("Error: {0}", e.ToString ());
@@ -58,6 +69,8 @@ namespace EMud.Networking
 			}
 
 			socket.Close ();
+
+			Running = false;
 		}
 
 		private void BeginListening() {
@@ -74,6 +87,10 @@ namespace EMud.Networking
 				Client client = new Client (acceptedSocket);
 				if (HandleConnection (client)) {
 					connectedClients.Add (client);
+
+					if (OnLogin != null) {
+						OnLogin (this, client);
+					}
 				} else {
 					client.Close ();
 				}

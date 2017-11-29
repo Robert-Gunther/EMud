@@ -12,9 +12,10 @@ namespace EMudDemo
 			try {
 				var username = client.RequestLine ("Username: ");
 				var password = client.RequestLine ("Password: ");
+				client.DisableEcho();
 
 				if (username == "hello" && password == "okay") {
-					client.SendLine ("Login successful!");
+					client.Username = username;
 					return true;
 				} else {
 					if(client.LoginAttempts >= Client.MaxLoginAttempts) {
@@ -31,19 +32,37 @@ namespace EMudDemo
 			}
 		}
 
+		private static Server server;
 
 		public static void Main (string[] args)
 		{
-			Server server = new Server (12345);
+			server = new Server (12345);
 
-			server.Established += Server_Established;
+			server.ConnectionEstablished += Server_Established;
 			server.HandleConnection += ProcessLogin;
+			server.OnLogin += Server_OnLogin;
 
 			server.Start ();
 
-			Console.WriteLine ("Press enter to shutdown the server . . .");
-			Console.ReadLine ();
-			server.Stop ();
+			Console.WriteLine ("Press Ctrl-C to gracefully shutdown the server . . .");
+			Console.CancelKeyPress += (sender, e) => {
+				Console.WriteLine("Server is shutting down.");
+				server.Stop ();
+			};
+
+			while (server.Running) {
+				// Process game logic.
+			}
+		}
+
+		static void Server_OnLogin (Server server, Client client)
+		{
+			Console.WriteLine("{0} has successfully connected", client.Username);
+			client.SendLine ("Welcome to E-Mud!");
+
+			client.ClearScreen ();
+			int count = server.Clients.Count;
+			client.SendLine ("There {0} currently {1} {2} online.", count > 1 ? "are" : "is", count, count > 1 ? "players" : "player");
 		}
 
 		static void Server_Established ()

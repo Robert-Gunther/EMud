@@ -11,21 +11,26 @@ namespace EMud.Networking
 		public const int MaxLoginAttempts = 3;
 		public int LoginAttempts = 0;
 
+		public string Username { get; set; }
+
 		public Client(Socket socket)
 		{
 			this.socket = socket;
 		}
 
-		public void SendLine(params string[] data) 
+		public void SendLine(String format, params Object[] data) 
 		{
-			foreach (var s in data) {
-				Send (s + "\r\n");
-			}
+			Send (format + "\r\n", data);
 		}
 
-		public void Send(string data)
+		public void Send(string format, params Object[] data)
 		{
-			socket.Send (Encoding.UTF8.GetBytes(data));
+			socket.Send (Encoding.UTF8.GetBytes(String.Format(format, data)));
+		}
+
+		public void Send(params byte[] data)
+		{
+			socket.Send (data);
 		}
 
 		public string ReadLine()
@@ -41,6 +46,21 @@ namespace EMud.Networking
 			Send (prompt);
 
 			return ReadLine ();
+		}
+
+		public void DisableEcho()
+		{
+			Send (Telnet.IAC, Telnet.DONT, Telnet.ECHO);
+		}
+
+		public void EnableEcho()
+		{
+			Send (Telnet.IAC, Telnet.DO, Telnet.ECHO);
+		}
+
+		public void ClearScreen()
+		{
+			Send ("\u001B[1J\u001B[H");
 		}
 
 		public void Close()
