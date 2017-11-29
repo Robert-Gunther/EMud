@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMud", "EMud\EMud.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaClasses", "LuaClasses\LuaClasses.csproj", "{7C25F1AC-0564-4280-967A-65084BEB9CC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{2E2BCE99-77A9-4496-8FFA-93CFF1EDCBA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,5 +27,9 @@ Global
 		{92710719-B748-4AEA-AC17-35435CF78153}.Debug|x86.Build.0 = Debug|x86
 		{92710719-B748-4AEA-AC17-35435CF78153}.Release|x86.ActiveCfg = Release|x86
 		{92710719-B748-4AEA-AC17-35435CF78153}.Release|x86.Build.0 = Release|x86
+		{2E2BCE99-77A9-4496-8FFA-93CFF1EDCBA3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2E2BCE99-77A9-4496-8FFA-93CFF1EDCBA3}.Debug|x86.Build.0 = Debug|Any CPU
+		{2E2BCE99-77A9-4496-8FFA-93CFF1EDCBA3}.Release|x86.ActiveCfg = Release|Any CPU
+		{2E2BCE99-77A9-4496-8FFA-93CFF1EDCBA3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
